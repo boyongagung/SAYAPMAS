@@ -1,0 +1,48 @@
+CATATAN PENDING — MODUL CUSTOMERS
+==================================
+
+## 1. BACKPOPULATES — Areas & Salesmen Models
+
+### app/modules/areas/models.py
+Tambahkan di class Area:
+
+    customers = relationship("Customer", back_populates="area")
+
+
+### app/modules/salesmen/models.py
+Tambahkan di class Salesman:
+
+    customers = relationship("Customer", back_populates="salesman")
+
+
+## 2. DAFTARKAN ROUTER — app/main.py
+
+from app.modules.customers.routes import router as customers_router
+
+app.include_router(customers_router)
+
+
+## STATUS
+[ ] back_populates Area
+[ ] back_populates Salesman
+[ ] include_router customers di main.py
+
+Catatan pending modul product
+- stock_operations (book_stock, transit_stock, deliver_stock) akan dipanggil oleh orders & deliveries service — bukan endpoint publik
+- Daftarkan router ke main.py
+- Audit log harga: implementasi penuh saat modul audit_log dibuat
+
+Catatan pending — modul orders:
+- Daftarkan router ke main.py
+- order_items tidak punya endpoint sendiri — dikelola via orders
+- transit_stock & deliver_stock akan dipanggil modul deliveries
+
+Catatan pending — modul deliveries
+- Daftarkan router ke main.py
+- failed status delivery → stok tidak di-rollback otomatis (perlu keputusan bisnis: apakah kembali ke booked atau available?)
+
+catatan pending modul finance
+​- Tambahkan FinanceService.crea8te_invoice_from_order() ke dalam DeliveryService tepat setelah status berubah menjadi delivered.
+​- Daftarkan finance.routes.router ke main.py.
+
+Catatan Pending: Implementasi diskon dinamis (berdasarkan status toko/customer) pada modul orders dan sinkronisasinya ke finance.

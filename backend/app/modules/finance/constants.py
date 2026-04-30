@@ -1,0 +1,12 @@
+RECORD_CODE_PREFIX: str = "FIN"
+PAYMENT_CODE_PREFIX: str = "PAY"
+DEFAULT_PAGE_SIZE: int = 20
+MAX_PAGE_SIZE: int = 100
+
+FINANCE_TYPE_RECEIVABLE: str = "receivable"
+FINANCE_TYPE_PAYMENT: str = "payment"
+FINANCE_TYPE_ADJUSTMENT: str = "adjustment"
+
+PAYMENT_STATUS_UNPAID: str = "unpaid"
+PAYMENT_STATUS_PARTIAL: str = "partial"
+PAYMENT_STATUS_PAID: str = "paid"

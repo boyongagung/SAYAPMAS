@@ -1,0 +1,8 @@
+PRODUCT_CODE_PREFIX: str = "PRD"
+DEFAULT_PAGE_SIZE: int = 20
+MAX_PAGE_SIZE: int = 100
+
+STOCK_STAGE_AVAILABLE: str = "available"
+STOCK_STAGE_BOOKED: str = "booked"
+STOCK_STAGE_IN_TRANSIT: str = "in_transit"
+STOCK_STAGE_DELIVERED: str = "delivered"

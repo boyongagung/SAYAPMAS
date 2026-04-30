@@ -1,0 +1,31 @@
+ERP SAMAS AUTOMATION LAYER v1.4.2
+
+ROLE:
+Lapisan enforcement otomatis.
+
+TOOLS:
+- Ruff
+- Black
+- Mypy
+- Pytest
+- Pre-commit hook
+- CI Gate
+
+MANDATORY COMMANDS:
+ruff check . --fix
+ruff format .
+pytest
+
+AUTO FAIL CONDITIONS:
+- commit() ditemukan di repository.py
+- query DB ditemukan di routes.py
+- response wrapper tidak standar
+- modul kurang dari 7 file wajib
+- import schemas di service.py
+
+SUGGESTED SCRIPTS:
+python make_module.py customers
+python audit_project.py
+
+CI RULE:
+Jika satu check FAIL => merge ditolak.

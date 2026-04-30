@@ -1,0 +1,34 @@
+ERP SAMAS OPERATIONS MANUAL v1.4.1
+
+ROLE:
+Panduan operasional harian developer / AI worker.
+
+BEFORE CODING:
+1. Sebut file yang akan dibuat
+2. Sebut layer yang disentuh
+3. Sebut risiko pelanggaran standar
+
+DAILY WORKFLOW:
+1. Pull latest branch
+2. Buat feature branch
+3. Generate module dari template
+4. Coding sesuai layer
+5. Jalankan test
+6. Jalankan linter
+7. Review checklist
+8. Commit
+
+CHECKLIST:
+[ ] route no db query
+[ ] route no business logic
+[ ] repository no commit
+[ ] service owns transaction
+[ ] response wrapper standard
+[ ] module complete
+[ ] naming valid
+[ ] no dead code
+
+TERMUX MODE:
+- Tutup app lain saat dev
+- Gunakan CLI tools ringan
+- Fokus backend lokal

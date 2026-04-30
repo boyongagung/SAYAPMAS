@@ -1,0 +1,31 @@
+ERP SAMAS GUIDING BOOK v1.4
+
+ROLE:
+Konstitusi utama proyek ERP Samas.
+
+CORE RULES:
+- Modular Monolith First
+- Route -> Service -> Repository -> ORM -> Database
+- Standard Over Preference
+- No Interpretation Zone
+- Response Standard wajib:
+  {"success": true, "message": "OK", "data": {}}
+- Semua operasi tulis wajib with self.db.begin()
+- Repository dilarang commit()
+- Route dilarang query DB dan business logic
+- Naming:
+  file snake_case
+  class PascalCase
+  function snake_case
+  constant UPPER_CASE
+- Struktur modul wajib:
+  routes.py
+  schemas.py
+  service.py
+  repository.py
+  models.py
+  exceptions.py
+  constants.py
+
+PRIORITY LAW:
+Jika dokumen turunan bertentangan dengan v1.4, maka v1.4 menang.

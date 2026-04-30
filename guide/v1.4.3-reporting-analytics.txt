@@ -1,0 +1,76 @@
+===============================================================================
+PROJECT: ERP SAMAS (KOPI GAJAH)
+VERSION: 1.4.3 - REPORTING & SECURITY LAYER
+STATUS: DEVELOPMENT (SQLite) | READY FOR PROD (PostgreSQL)
+===============================================================================
+
+1. TUJUAN (OVERVIEW)
+--------------------
+Modul ini mentransformasi data operasional menjadi informasi strategis bagi 
+manajemen. Fokus utama adalah visibilitas performa bulanan dan pengamanan data 
+menggunakan Role-Based Access Control (RBAC).
+
+2. KEAMANAN & HAK AKSES (RBAC INTEGRATION)
+------------------------------------------
+Setiap endpoint laporan wajib menggunakan dependensi `require_roles` untuk 
+mencegah kebocoran data finansial.
+
+| Endpoint            | Role (Allowed)              | Deskripsi Data             |
+|---------------------|-----------------------------|----------------------------|
+| /reports/sales-mtd  | admin, manager, owner       | Omzet & Total Penjualan    |
+| /reports/salesman   | admin, manager              | Performa individu tim sales|
+| /reports/inventory  | admin, manager, inventory   | Stok & Evaluasi Produk     |
+| /reports/returns    | admin, manager, inventory   | Data barang retur          |
+
+3. LOGIKA DATABASE (SQLITE - DEVELOPMENT)
+-----------------------------------------
+Logic ditempatkan pada Database Views untuk memisahkan komputasi dari kode aplikasi.
+
+A. View: Penjualan MTD (Month-to-Date)
+   SELECT SUM(total_amount) FROM invoices 
+   WHERE strftime('%Y-%m', date_created) = strftime('%Y-%m', 'now');
+
+B. View: Performa Salesman (Bulan Berjalan)
+   SELECT s.name, SUM(i.total_amount) 
+   FROM invoices i
+   JOIN sales_orders so ON i.order_id = so.id
+   JOIN salesmen s ON so.salesman_id = s.id
+   WHERE strftime('%Y-%m', i.date_created) = strftime('%Y-%m', 'now')
+   GROUP BY s.id;
+
+C. View: Evaluasi Produk & Retur (Bulan Lalu)
+   -- Gunakan modifier '-1 month' untuk penarikan data historis.
+   SELECT p.name, SUM(ii.quantity) FROM invoice_items ii
+   JOIN invoices i ON ii.invoice_id = i.id
+   WHERE strftime('%Y-%m', i.date_created) = strftime('%Y-%m', 'now', '-1 month')
+   GROUP BY p.id;
+
+4. ARSITEKTUR EKSEKUSI
+----------------------
+- Skema/View    : Didefinisikan di `app/database/`
+- Data Access   : Dieksekusi di `app/repositories/report_repository.py`
+- Business Logic: Diolah di `app/services/report_service.py`
+- Endpoints     : Dibungkus `require_roles` di `app/routes/reports.py`
+
+5. PANDUAN MIGRASI KE POSTGRESQL (PRODUCTION)
+---------------------------------------------
+Saat pindah ke Postgres, lakukan penyesuaian fungsi waktu pada Repository Layer:
+
+- SQLite: strftime('%Y-%m', date_created)
+- Postgres: date_trunc('month', date_created) ATAU EXTRACT(MONTH FROM ...)
+
+- SQLite (Date Diff): julianday('now') - julianday(due_date)
+- Postgres (Date Diff): CURRENT_DATE - due_date
+
+- Data Types: Pastikan migrasi dari Integer (0/1) ke Boolean (True/False) 
+  untuk status-status flag.
+
+6. STANDAR OUTPUT FRONTEND
+--------------------------
+Semua data laporan harus dikirimkan dalam format JSON yang siap divisualisasikan 
+ke dalam Chart.js atau Recharts pada Dashboard React.
+
+===============================================================================
+END OF DOCUMENT v1.4.3
+===============================================================================
+

@@ -1,0 +1,22 @@
+==================================================
+AKUN TEST ERP SAMAS 
+⚠️  DILARANG UNTUK LINGKUNGAN PRODUCTION
+==================================================
+
+Protokol Keamanan:
+1. [span_2](start_span)Akun ini hanya untuk validasi "App startup sukses"[span_2](end_span).
+2. Password wajib di-hash menggunakan bcrypt.Audit Log akan mencatat aktivitas dari akun-akun ini.
+
+Username       Password         Role (RBAC)
+-----------    -------------    -------------------
+root           root123          root
+ceo            ceo123           manager_tertinggi
+mansales        msales123        manager_penjualan
+manops          mops123          manager_operasional
+sales_01       sales123         salesman
+fin_01         finance123       admin_finance
+wh_01          gudang123        staf_gudang
+
+==================================================
+STATUS: DEV_ONLY | COMPLIANCE: 100%
+==================================================

@@ -1,0 +1,34 @@
+from fastapi import FastAPI
+from app.database.base import Base
+from app.database.session import engine
+
+from app.modules.users.routes import router as users_router
+from app.modules.areas.routes import router as areas_router
+from app.modules.salesmen.routes import router as salesmen_router
+from app.modules.customers.routes import router as customers_router
+from app.modules.products.routes import router as products_router
+from app.modules.orders.routes import router as orders_router
+from app.modules.deliveries.routes import router as deliveries_router
+from app.modules.finance.routes import router as finance_router
+# main.py — tambahkan 2 baris ini
+from app.shared.exceptions import register_exception_handlers
+
+register_exception_handlers(app)
+app = FastAPI(title="ERP SAMAS - PROJECT PAK BOYONG")
+
+@app.on_event("startup")
+def startup():
+    Base.metadata.create_all(bind=engine)
+
+@app.get("/")
+def root():
+    return {"success": True, "message": "ERP Samas API is Running"}
+
+app.include_router(users_router)
+app.include_router(areas_router)
+app.include_router(salesmen_router)
+app.include_router(customers_router)
+app.include_router(products_router)
+app.include_router(orders_router)
+app.include_router(deliveries_router)
+app.include_router(finance_router)
