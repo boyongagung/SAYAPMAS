@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.modules.areas.routes import router as areas_router
 from app.modules.auth.routes import router as auth_router
@@ -19,6 +20,17 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="ERP Samas - Pak Boyong", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://erp-samas-frontend.vercel.app",
+        "http://localhost:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 register_exception_handlers(app)
 
