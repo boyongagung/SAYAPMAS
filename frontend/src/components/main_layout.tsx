@@ -29,7 +29,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <aside className="flex flex-col w-60 shrink-0 overflow-y-auto" style={{ backgroundColor: 'var(--coffee-dark)' }}>
+      <aside className="flex flex-col w-1/4 shrink-0 overflow-y-auto" style={{ backgroundColor: 'var(--coffee-dark)' }}>
         <div className="flex items-center gap-2 px-5 py-5 border-b" style={{ borderColor: 'var(--coffee-mid)' }}>
           <Coffee size={22} style={{ color: 'var(--amber-accent)' }} />
           <span className="font-display text-lg font-semibold" style={{ color: 'var(--cream-bg)' }}>ERP Samas</span>
