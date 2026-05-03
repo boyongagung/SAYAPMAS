@@ -40,17 +40,10 @@ export default function DashboardPage() {
 
   const today    = today_str();
   const mo_start = month_start();
-  const seven_days_ago = new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10);
-
   const orders_today = orders.filter((o: any) => o.created_at?.startsWith(today));
   const orders_month = orders.filter((o: any) => o.created_at >= mo_start);
   const piutang      = finance.reduce((acc: number, r: any) => acc + (r.remaining_amount ?? 0), 0);
   const stok_kritis  = products.filter((p: any) => p.stock_available < 10);
-
-  const recent_orders = orders
-    .filter((o: any) => o.created_at >= seven_days_ago)
-    .sort((a: any, b: any) => b.created_at.localeCompare(a.created_at))
-    .slice(0, 10);
 
   const max_count = Math.max(...salesmen.map((s: any) =>
     orders_today.filter((o: any) => o.salesman_id === s.id).length), 1);
@@ -80,46 +73,6 @@ export default function DashboardPage() {
         <StatCard label="Total Piutang"   value={fmt_currency(piutang)} icon={<Banknote size={20} />} />
         <StatCard label="Stok Kritis"     value={stok_kritis.length}    icon={<AlertTriangle size={20} />} danger={stok_kritis.length > 0} />
       </div>
-
-      {/* Orders Terbaru */}
-      <section>
-        <h2 className="font-display text-lg font-semibold mb-3" style={{ color: 'var(--coffee-dark)' }}>
-          Orders Terbaru (7 hari)
-        </h2>
-        <div className="rounded-xl border overflow-hidden" style={{ borderColor: 'var(--cream-border)' }}>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead style={{ backgroundColor: 'var(--cream-card)' }}>
-                <tr>
-                  {['Kode', 'Customer', 'Salesman', 'Total', 'Status', 'Waktu'].map(h => (
-                    <th key={h} className="text-left px-4 py-3 font-semibold"
-                      style={{ color: 'var(--coffee-light)', borderBottom: '1px solid var(--cream-border)' }}>
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody style={{ backgroundColor: 'var(--cream-card)' }}>
-                {recent_orders.length === 0
-                  ? <tr><td colSpan={6} className="px-4 py-8 text-center text-sm" style={{ color: 'var(--coffee-light)' }}>Tidak ada data</td></tr>
-                  : recent_orders.map((o: any) => (
-                    <tr key={o.id} className="border-t" style={{ borderColor: 'var(--cream-border)' }}>
-                      <td className="px-4 py-3 font-mono font-medium" style={{ color: 'var(--coffee-mid)' }}>{o.order_code}</td>
-                      <td className="px-4 py-3" style={{ color: 'var(--coffee-dark)' }}>{o.customer_name ?? o.customer_id}</td>
-                      <td className="px-4 py-3" style={{ color: 'var(--coffee-dark)' }}>{o.salesman_name ?? o.salesman_id}</td>
-                      <td className="px-4 py-3 font-medium" style={{ color: 'var(--coffee-dark)' }}>{fmt_currency(o.total_amount ?? 0)}</td>
-                      <td className="px-4 py-3">{status_badge(o.status)}</td>
-                      <td className="px-4 py-3 text-xs" style={{ color: 'var(--coffee-light)' }}>
-                        {o.created_at ? new Date(o.created_at).toLocaleString('id-ID') : '-'}
-                      </td>
-                    </tr>
-                  ))
-                }
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
 
       {/* Stok + Salesman */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
