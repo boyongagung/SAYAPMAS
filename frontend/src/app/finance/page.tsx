@@ -9,8 +9,8 @@ import { Plus, X, Check } from 'lucide-react';
 interface FinanceRecord { id: number; order_id: number; total_amount: number; paid_amount: number; remaining_amount: number; payment_status: string; }
 interface Payment { id: number; finance_record_id: number; amount: number; created_at: string; }
 
-const fetch_finance  = () => api.get('/api/v1/finance/records?limit=100').then(r => r.data.data);
-const fetch_orders   = () => api.get('/api/v1/orders?limit=100').then(r => r.data.data);
+const fetch_finance  = () => api.get('/api/v1/finance/records/?limit=100').then(r => r.data.data);
+const fetch_orders   = () => api.get('/api/v1/orders/?limit=100').then(r => r.data.data);
 
 const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n);
 

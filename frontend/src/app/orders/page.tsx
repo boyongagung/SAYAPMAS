@@ -11,10 +11,10 @@ interface Customer { id: number; name: string; }
 interface Salesman { id: number; full_name: string; }
 interface Product { id: number; name: string; price: number; }
 
-const fetch_orders    = () => api.get('/api/v1/orders?limit=100').then(r => r.data.data);
-const fetch_customers = () => api.get('/api/v1/customers?limit=100').then(r => r.data.data);
-const fetch_salesmen  = () => api.get('/api/v1/salesmen?limit=100').then(r => r.data.data);
-const fetch_products  = () => api.get('/api/v1/products?limit=100').then(r => r.data.data);
+const fetch_orders    = () => api.get('/api/v1/orders/?limit=100').then(r => r.data.data);
+const fetch_customers = () => api.get('/api/v1/customers/?limit=100').then(r => r.data.data);
+const fetch_salesmen  = () => api.get('/api/v1/salesmen/?limit=100').then(r => r.data.data);
+const fetch_products  = () => api.get('/api/v1/products/?limit=100').then(r => r.data.data);
 const fetch_order     = (id: number) => api.get(`/api/v1/orders/${id}`).then(r => r.data.data);
 
 const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n);

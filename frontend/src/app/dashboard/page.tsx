@@ -24,10 +24,10 @@ function status_badge(status: string) {
   );
 }
 
-const fetch_orders   = () => api.get('/api/v1/orders?limit=100').then(r => r.data.data);
-const fetch_products = () => api.get('/api/v1/products?limit=100').then(r => r.data.data);
-const fetch_finance  = () => api.get('/api/v1/finance/records?limit=500').then(r => r.data.data);
-const fetch_salesmen = () => api.get('/api/v1/salesmen?limit=100').then(r => r.data.data);
+const fetch_orders   = () => api.get('/api/v1/orders/?limit=100').then(r => r.data.data);
+const fetch_products = () => api.get('/api/v1/products/?limit=100').then(r => r.data.data);
+const fetch_finance  = () => api.get('/api/v1/finance/records/?limit=500').then(r => r.data.data);
+const fetch_salesmen = () => api.get('/api/v1/salesmen/?limit=100').then(r => r.data.data);
 
 export default function DashboardPage() {
   const { data: orders   = [], isLoading: lo, refetch: ro } = useQuery({ queryKey: ['orders'],   queryFn: fetch_orders });

@@ -9,8 +9,8 @@ import { Plus, Pencil, Trash2, X, Check, MapPin } from 'lucide-react';
 interface Customer { id: number; name: string; phone: string; address: string; latitude: number; longitude: number; area_id: number; }
 interface Area { id: number; name: string; }
 
-const fetch_customers = () => api.get('/api/v1/customers?limit=100').then(r => r.data.data);
-const fetch_areas     = () => api.get('/api/v1/areas?limit=100').then(r => r.data.data);
+const fetch_customers = () => api.get('/api/v1/customers/?limit=100').then(r => r.data.data);
+const fetch_areas     = () => api.get('/api/v1/areas/?limit=100').then(r => r.data.data);
 
 const EMPTY = { name: '', phone: '', address: '', latitude: '', longitude: '', area_id: '' };
 

@@ -8,7 +8,7 @@ import { Plus, Pencil, Trash2, X, Check } from 'lucide-react';
 
 interface Product { id: number; name: string; price: number; stock_available: number; stock_booked: number; stock_in_transit: number; stock_delivered: number; }
 
-const fetch_products = () => api.get('/api/v1/products?limit=100').then(r => r.data.data);
+const fetch_products = () => api.get('/api/v1/products/?limit=100').then(r => r.data.data);
 const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n);
 const EMPTY = { name: '', price: '', stock_available: '' };
 

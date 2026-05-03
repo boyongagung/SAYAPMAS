@@ -8,9 +8,9 @@ import { Eye, X } from 'lucide-react';
 
 interface Delivery { id: number; delivery_code: string; order_id: number; status: string; created_at: string; }
 
-const fetch_deliveries = () => api.get('/api/v1/deliveries?limit=100').then(r => r.data.data);
+const fetch_deliveries = () => api.get('/api/v1/deliveries/?limit=100').then(r => r.data.data);
 const fetch_delivery   = (id: number) => api.get(`/api/v1/deliveries/${id}`).then(r => r.data.data);
-const fetch_orders     = () => api.get('/api/v1/orders?limit=100').then(r => r.data.data);
+const fetch_orders     = () => api.get('/api/v1/orders/?limit=100').then(r => r.data.data);
 
 const STATUS_COLORS: Record<string, string> = {
   pending: '#ff8f00', in_transit: '#6a1b9a', delivered: '#2e7d32', failed: '#c62828',

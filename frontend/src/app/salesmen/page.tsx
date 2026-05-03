@@ -9,8 +9,8 @@ import { Plus, Pencil, Trash2, X, Check } from 'lucide-react';
 interface Salesman { id: number; full_name: string; phone: string; area_id: number; username: string; }
 interface Area { id: number; name: string; }
 
-const fetch_salesmen = () => api.get('/api/v1/salesmen?limit=100').then(r => r.data.data);
-const fetch_areas    = () => api.get('/api/v1/areas?limit=100').then(r => r.data.data);
+const fetch_salesmen = () => api.get('/api/v1/salesmen/?limit=100').then(r => r.data.data);
+const fetch_areas    = () => api.get('/api/v1/areas/?limit=100').then(r => r.data.data);
 
 const EMPTY = { full_name: '', phone: '', area_id: '', username: '', password: '' };
 

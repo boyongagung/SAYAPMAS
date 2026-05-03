@@ -10,8 +10,8 @@ import { MapPin, Plus, X, Check, Loader2 } from 'lucide-react';
 interface Customer { id: number; name: string; address: string; }
 interface Product  { id: number; name: string; price: number; stock_available: number; }
 
-const fetch_customers = () => api.get('/api/v1/customers?limit=100').then(r => r.data.data);
-const fetch_products  = () => api.get('/api/v1/products?limit=100').then(r => r.data.data);
+const fetch_customers = () => api.get('/api/v1/customers/?limit=100').then(r => r.data.data);
+const fetch_products  = () => api.get('/api/v1/products/?limit=100').then(r => r.data.data);
 
 const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n);
 

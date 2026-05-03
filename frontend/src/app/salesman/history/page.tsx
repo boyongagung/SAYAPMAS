@@ -6,8 +6,8 @@ import MainLayout from '@/components/main_layout';
 import api from '@/services/api';
 import { useAuthStore } from '@/store/auth_store';
 
-const fetch_orders    = () => api.get('/api/v1/orders?limit=200').then(r => r.data.data);
-const fetch_customers = () => api.get('/api/v1/customers?limit=100').then(r => r.data.data);
+const fetch_orders    = () => api.get('/api/v1/orders/?limit=200').then(r => r.data.data);
+const fetch_customers = () => api.get('/api/v1/customers/?limit=100').then(r => r.data.data);
 
 const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n);
 

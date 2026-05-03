@@ -7,7 +7,7 @@ import { useAuthStore } from '@/store/auth_store';
 import { ShoppingCart, TrendingUp, Clock } from 'lucide-react';
 import StatCard from '@/components/stat_card';
 
-const fetch_orders = () => api.get('/api/v1/orders?limit=100').then(r => r.data.data);
+const fetch_orders = () => api.get('/api/v1/orders/?limit=100').then(r => r.data.data);
 
 const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n);
 

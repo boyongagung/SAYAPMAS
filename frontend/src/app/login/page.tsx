@@ -14,23 +14,21 @@ export default function LoginPage() {
   const [error, set_error] = useState('');
 
   const handle_submit = async () => {
-    set_error('');
-    set_loading(true);
-    try {
-      const form = new URLSearchParams();
-      form.append('username', username);
-      form.append('password', password);
-      const { data } = await api.post('/api/v1/auth/login', form, {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      });
-      set_auth(data.data.access_token, data.data.user);
-      router.push(data.data.user.role === 'salesman' ? '/salesman/dashboard' : '/dashboard');
-    } catch (err: any) {
-      set_error(err.response?.data?.message ?? 'Login gagal');
-    } finally {
-      set_loading(false);
-    }
-  };
+  set_error('');
+  set_loading(true);
+  try {
+    const { data } = await api.post('/api/v1/auth/login', {
+      username,
+      password,
+    });
+    set_auth(data.data.access_token, data.data.user);
+    router.push(data.data.user.role === 'salesman' ? '/salesman/dashboard' : '/dashboard');
+  } catch (err: any) {
+    set_error(err.response?.data?.message ?? 'Login gagal');
+  } finally {
+    set_loading(false);
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--cream-bg)' }}>

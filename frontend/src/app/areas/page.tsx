@@ -8,7 +8,7 @@ import { Plus, Pencil, Trash2, X, Check } from 'lucide-react';
 
 interface Area { id: number; name: string; description: string; }
 
-const fetch_areas = () => api.get('/api/v1/areas?limit=100').then(r => r.data.data);
+const fetch_areas = () => api.get('/api/v1/areas/?limit=100').then(r => r.data.data);
 
 export default function AreasPage() {
   const qc = useQueryClient();
