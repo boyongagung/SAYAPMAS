@@ -1,19 +1,20 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import ProtectedRoute from '@/components/protected_route';
 import MainLayout from '@/components/main_layout';
 import api from '@/services/api';
 import { useAuthStore } from '@/store/auth_store';
-import { MapPin, Plus, X, Check, Loader2 } from 'lucide-react';
+import { MapPin, X, Check, Loader2 } from 'lucide-react';
 
-interface Customer { id: number; name: string; address: string; }
-interface Product  { id: number; name: string; price: number; stock_available: number; }
+interface Customer { id: number; nama: string; address: string; }
+interface Product  { id: number; nama: string; price: number; stock_available: number; }
 
 const fetch_customers = () => api.get('/api/v1/customers/?limit=100').then(r => r.data.data);
 const fetch_products  = () => api.get('/api/v1/products/?limit=100').then(r => r.data.data);
 
-const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n);
+const fmt = (n: number) =>
+  new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n);
 
 export default function SalesmanOrderPage() {
   const { user } = useAuthStore();
@@ -40,7 +41,7 @@ export default function SalesmanOrderPage() {
   };
 
   const create_mut = useMutation({
-    mutationFn: (d: any) => api.post('/api/v1/orders', d),
+    mutationFn: (d: unknown) => api.post('/api/v1/orders', d),
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['orders'] });
       set_success(`Order ${res.data.data.order_code} berhasil dibuat!`);
@@ -87,6 +88,7 @@ export default function SalesmanOrderPage() {
           )}
 
           <div className="rounded-xl border p-5 space-y-4" style={{ borderColor: 'var(--cream-border)', backgroundColor: 'var(--cream-card)' }}>
+
             {/* Customer */}
             <div>
               <label className="block text-sm font-medium mb-1" style={{ color: 'var(--coffee-light)' }}>Customer</label>
@@ -94,7 +96,9 @@ export default function SalesmanOrderPage() {
                 className="w-full px-3 py-2 rounded-lg text-sm outline-none border"
                 style={{ backgroundColor: 'var(--cream-bg)', borderColor: 'var(--cream-border)', color: 'var(--coffee-dark)' }}>
                 <option value="">Pilih Customer</option>
-                {customers.map((c: Customer) => <option key={c.id} value={c.id}>{c.name} — {c.address}</option>)}
+                {customers.map((c: Customer) => (
+                  <option key={c.id} value={c.id}>{c.nama} — {c.address}</option>
+                ))}
               </select>
             </div>
 
@@ -127,11 +131,12 @@ export default function SalesmanOrderPage() {
                         style={{ backgroundColor: 'var(--cream-bg)', borderColor: 'var(--cream-border)', color: 'var(--coffee-dark)' }}>
                         <option value="">Pilih Produk</option>
                         {products.map((p: Product) => (
-                          <option key={p.id} value={p.id}>{p.name} — {fmt(p.price)} (stok: {p.stock_available})</option>
+                          <option key={p.id} value={p.id}>{p.nama} — {fmt(p.price)} (stok: {p.stock_available})</option>
                         ))}
                       </select>
                       <input value={item.quantity} onChange={e => update_item(i, 'quantity', e.target.value)}
-                        placeholder="Qty" className="w-20 px-3 py-2 rounded-lg text-sm outline-none border"
+                        placeholder="Qty" type="number" min="1"
+                        className="w-20 px-3 py-2 rounded-lg text-sm outline-none border"
                         style={{ backgroundColor: 'var(--cream-bg)', borderColor: 'var(--cream-border)', color: 'var(--coffee-dark)' }} />
                       {items.length > 1 && (
                         <button onClick={() => remove_item(i)} style={{ color: 'var(--red-danger)' }}><X size={14} /></button>
